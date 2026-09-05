@@ -5,6 +5,86 @@ import java.io.IOException;
 
 public class LogForge {
 
+    static class ServiceStats{
+        private String serviceName;
+        private int infoCount;
+        private int warnCount;
+        private int errorCount;
+        private int total=0;
+
+        public ServiceStats(String sname){
+            this.serviceName=sname;
+            this.total=0;
+            this.errorCount=0;
+            this.infoCount=0;
+            this.warnCount=0;
+        }
+        public void recordLog(String level){
+            total++;
+            if(level.equals("INFO")){
+                infoCount++;
+            }
+            else if(level.equals("ERROR")){
+                errorCount++;
+            }
+            else if(level.equals("WARN")){
+                warnCount++;
+            }
+        }
+
+        public void displayServiceStats(){
+            System.out.println(serviceName + " total=" + total + " info=" + infoCount + " warn=" + warnCount + " error=" + errorCount);
+        }
+    }
+    static class LogEntry{
+        private String timeStamp;
+        private int reqId;
+        private String service;
+        private String level;
+        private String message;
+
+
+        public LogEntry(String timeStamp,int reqId, String service, String level, String message){
+            this.timeStamp=timeStamp;
+            this.reqId=reqId;
+            this.service=service;
+            this.level=level;
+            this.message=message;
+        }
+
+        public String getTimeStamp() {
+            return timeStamp;
+        }
+
+        public int getReqId() {
+            return reqId;
+        }
+
+        public String getService() {
+            return service;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public boolean matchRecord(int requestId) {
+            return this.reqId == requestId;
+        }
+
+        void display_log_entry(){
+            System.out.println("Time Stamp: "+ timeStamp);
+            System.out.println("Service: "+ service);
+            System.out.println("Level: "+ level);
+            System.out.println("Request Id: "+ reqId);
+            System.out.println("Message: "+ message);
+        }
+    }
+
     public static void main(String[] args) {
 //        if (args.length < 1) {
 //            System.out.println("Usage: java LogForge system.log");
@@ -19,6 +99,12 @@ public class LogForge {
         int valid=0;
         int invalid=0;
 
+        LogEntry[] log=new LogEntry[5];
+        int logCount=0;
+
+        ServiceStats[] services=new ServiceStats[5];
+        int serviceCount=0;
+
 //        File filePath = new File(args[0]);
         File filePath = new File("system.log");
         try {
@@ -31,6 +117,20 @@ public class LogForge {
                 String level = getLevel(line);
                 if(isValidRecord(line)) {
                     valid++;
+
+                    String timestamp=getField(line,0);
+                    String service=getField(line,1);
+                    String levell=getField(line,2);
+                    int reqid = parsePositiveInt(getField(line, 3));
+                    String msg=getField(line,4);
+
+                    LogEntry entry=new LogEntry(timestamp,reqid,service,levell,msg);
+
+                    if(logCount==log.length){
+                        log=resizeLog(log);
+                    }
+                    log[logCount]=entry;
+                    logCount++;
                     if (level.equals("INFO")) {
                         info++;
                     }
@@ -40,6 +140,24 @@ public class LogForge {
                     if (level.equals("WARN")) {
                         warn++;
                     }
+
+                    ServiceStats servicecheck=null;
+                    for(int i=0;i<serviceCount;i++){
+                        if(services[i].serviceName.equals(service)){
+                            servicecheck=services[i];
+                            break;
+                        }
+                    }
+                    if(servicecheck == null){
+                        ServiceStats newStat =new ServiceStats(service);
+                        if(serviceCount==services.length){
+                            services=resizeServices(services);
+                        }
+                        services[serviceCount]=newStat;
+                        servicecheck=newStat;
+                        serviceCount++;
+                    }
+                    servicecheck.recordLog(levell);
                 }
                 else{
                     invalid++;
@@ -58,8 +176,36 @@ public class LogForge {
         System.out.println("WARN: " + warn);
         System.out.println("ERROR: " + error);
 
+        System.out.println("\n--- VERIFYING LOG ENTRY OBJECTS ---");
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Entry #" + (i + 1) + ":");
+            log[i].display_log_entry();
+            System.out.println("---------------------------------");
+        }
+
+        System.out.println("\n--- VERIFYING Servise Stats ENTRY OBJECTS ---");
+        for (int i = 0; i < serviceCount; i++) {
+            System.out.println("Entry #" + (i + 1) + ":");
+            services[i].displayServiceStats();
+            System.out.println("---------------------------------");
+        }
     }
 
+    public static LogEntry[] resizeLog(LogEntry[] old){
+        LogEntry[] newLog=new LogEntry[old.length*2];
+        for(int i=0;i< old.length;i++){
+            newLog[i]=old[i];
+        }
+        return newLog;
+    }
+
+    public static ServiceStats[] resizeServices(ServiceStats[] old){
+        ServiceStats[] newStat=new ServiceStats[old.length*2];
+        for(int i=0;i<old.length;i++){
+            newStat[i]=old[i];
+        }
+        return newStat;
+    }
     public static String getLevel(String line) {
         int pipeCount = 0;
         int start = -1;
@@ -130,6 +276,14 @@ public class LogForge {
         return true;
     }
 
+    public static int parsePositiveInt(String str) {
+        int num = 0;
+        for (int i = 0; i < str.length(); i++) {
+            num = num * 10 + (str.charAt(i) - '0');
+        }
+        return num;
+    }
+
     public static String getTimestamp(String Line){
         String time="";
         for(int i=0;i<Line.length();i++){
@@ -157,6 +311,28 @@ public class LogForge {
             }
         }
         return req;
+    }
+
+    public static String getField(String Line, int target) {
+        int pipeCount=0;
+        String result= "";
+        for(int i=0;i<Line.length();i++){
+            char c=Line.charAt(i);
+            if(c=='|'){
+                if(pipeCount==target){
+                    return result;
+                }
+                pipeCount++;
+                result="";
+            }
+            else{
+                result+=c;
+            }
+        }
+        if(pipeCount==target){
+            return result;
+        }
+        return "";
     }
 }
 

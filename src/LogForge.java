@@ -32,6 +32,10 @@ public class LogForge {
             }
         }
 
+        public double getErrorRate() {
+            if (total == 0) return 0.0;
+            return ((double) errorCount / total) * 100.0;
+        }
         public void displayServiceStats(){
             System.out.println(serviceName + " total=" + total + " info=" + infoCount + " warn=" + warnCount + " error=" + errorCount);
         }
@@ -176,6 +180,8 @@ public class LogForge {
         System.out.println("WARN: " + warn);
         System.out.println("ERROR: " + error);
 
+        sortServicesStats(services,serviceCount);
+
         System.out.println("\n--- VERIFYING LOG ENTRY OBJECTS ---");
         for (int i = 0; i < 5; i++) {
             System.out.println("Entry #" + (i + 1) + ":");
@@ -188,6 +194,11 @@ public class LogForge {
             System.out.println("Entry #" + (i + 1) + ":");
             services[i].displayServiceStats();
             System.out.println("---------------------------------");
+        }
+
+        System.out.println("\n--- WORST SERVICES (SORTED BY ERROR RATE) ---");
+        for (int i = 0; i < serviceCount; i++) {
+            services[i].displayServiceStats();
         }
     }
 
@@ -206,6 +217,38 @@ public class LogForge {
         }
         return newStat;
     }
+
+    public static Boolean checkServiceName(String name1, String name2){
+        return name1.compareTo(name2)>0;
+    }
+    public static void sortServicesStats(ServiceStats[] stats, int count){
+        if(count<1) return;
+
+        for(int i=0;i<count;i++){
+            for(int j=0;j<count-i-1;j++){
+                double error1=stats[j].getErrorRate();
+                double error2=stats[j+1].getErrorRate();
+
+                boolean shouldSwap=false;
+                if(error1>error2){
+                    shouldSwap=true;
+                }
+
+                if(error1==error2){
+                    if(checkServiceName(stats[j].serviceName,stats[j+1].serviceName)){
+                        shouldSwap=true;
+                    }
+                }
+                if(shouldSwap){
+                    ServiceStats temp=stats[j];
+                    stats[j]=stats[j+1];
+                    stats[j+1]=temp;
+                }
+            }
+        }
+
+    }
+
     public static String getLevel(String line) {
         int pipeCount = 0;
         int start = -1;

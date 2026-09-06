@@ -1,0 +1,2027 @@
+Total records: 966
+Valid Records: 966
+Invalid Records: 0
+ERROR: 115
+INFO: 816
+WARN: 35
+
+--- VERIFYING LOG ENTRY OBJECTS ---
+Entry #1:
+Time Stamp: 09:00:01
+Service: AUTH
+Level: INFO
+Request Id: 1001
+Message: login successful
+---------------------------------
+Entry #2:
+Time Stamp: 09:00:02
+Service: API
+Level: INFO
+Request Id: 1001
+Message: request received
+---------------------------------
+Entry #3:
+Time Stamp: 09:00:03
+Service: SEARCH
+Level: INFO
+Request Id: 1001
+Message: search started
+---------------------------------
+Entry #4:
+Time Stamp: 09:00:04
+Service: SEARCH
+Level: INFO
+Request Id: 1001
+Message: search completed
+---------------------------------
+Entry #5:
+Time Stamp: 09:00:05
+Service: API
+Level: INFO
+Request Id: 1002
+Message: request received
+---------------------------------
+
+--- VERIFYING Service Stats ENTRY OBJECTS ---
+Entry #1:
+PAYMENT total=207 info=152 warn=0 error=55
+---------------------------------
+Entry #2:
+API total=173 info=138 warn=7 error=28
+---------------------------------
+Entry #3:
+ORDER total=115 info=105 warn=0 error=10
+---------------------------------
+Entry #4:
+NOTIFY total=92 info=81 warn=5 error=6
+---------------------------------
+Entry #5:
+SEARCH total=126 info=113 warn=6 error=7
+---------------------------------
+Entry #6:
+AUTH total=75 info=70 warn=1 error=4
+---------------------------------
+Entry #7:
+INVENTORY total=112 info=94 warn=13 error=5
+---------------------------------
+Entry #8:
+CART total=66 info=63 warn=3 error=0
+---------------------------------
+
+--- WORST SERVICES (SORTED BY ERROR RATE) ---
+PAYMENT total=207 info=152 warn=0 error=55 errorRate=26.57005%
+API total=173 info=138 warn=7 error=28 errorRate=16.18497%
+ORDER total=115 info=105 warn=0 error=10 errorRate=8.69565%
+NOTIFY total=92 info=81 warn=5 error=6 errorRate=6.52174%
+SEARCH total=126 info=113 warn=6 error=7 errorRate=5.55556%
+AUTH total=75 info=70 warn=1 error=4 errorRate=5.33333%
+INVENTORY total=112 info=94 warn=13 error=5 errorRate=4.46429%
+CART total=66 info=63 warn=3 error=0 errorRate=0.00000%
+
+--- DETECTED INCIDENTS ---
+Incident #1: AUTH (3 errors) from 09:07:25 to 09:07:27
+Incident #2: API (5 errors) from 09:01:25 to 09:01:53
+Incident #3: API (3 errors) from 09:09:05 to 09:09:07
+Incident #4: API (3 errors) from 09:13:41 to 09:13:43
+Incident #5: API (4 errors) from 09:18:10 to 09:18:13
+Incident #6: API (3 errors) from 09:24:30 to 09:24:32
+Incident #7: API (3 errors) from 09:39:30 to 09:39:32
+Incident #8: API (3 errors) from 09:45:10 to 09:45:12
+Incident #9: API (3 errors) from 09:51:20 to 09:51:22
+Incident #10: SEARCH (3 errors) from 09:02:16 to 09:02:18
+Incident #11: SEARCH (4 errors) from 09:06:11 to 09:06:14
+Incident #12: INVENTORY (3 errors) from 09:12:21 to 09:12:23
+Incident #13: PAYMENT (4 errors) from 09:02:51 to 09:02:54
+Incident #14: PAYMENT (4 errors) from 09:05:01 to 09:05:04
+Incident #15: PAYMENT (3 errors) from 09:10:30 to 09:10:32
+Incident #16: PAYMENT (4 errors) from 09:15:21 to 09:15:24
+Incident #17: PAYMENT (3 errors) from 09:19:40 to 09:19:42
+Incident #18: PAYMENT (3 errors) from 09:26:20 to 09:26:22
+Incident #19: PAYMENT (4 errors) from 09:29:01 to 09:29:04
+Incident #20: PAYMENT (4 errors) from 09:34:40 to 09:34:43
+Incident #21: PAYMENT (3 errors) from 09:42:10 to 09:42:12
+Incident #22: PAYMENT (3 errors) from 09:48:20 to 09:48:22
+Incident #23: PAYMENT (3 errors) from 09:53:10 to 09:53:12
+Incident #24: PAYMENT (3 errors) from 09:58:00 to 09:58:02
+Incident #25: PAYMENT (3 errors) from 10:00:20 to 10:00:22
+Incident #26: PAYMENT (3 errors) from 10:03:50 to 10:03:52
+Incident #27: NOTIFY (3 errors) from 09:03:25 to 09:03:27
+Incident #28: NOTIFY (3 errors) from 09:21:10 to 09:21:12
+
+--- REQUEST STATS ---
+Request 1001 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1002 : SUCCESS
+Records: 4
+Errors: 0
+Services: API CART INVENTORY
+
+Request 1003 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1004 : SUCCESS
+Records: 5
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1005 : SUCCESS
+Records: 3
+Errors: 0
+Services: API CART
+
+Request 1006 : SUCCESS
+Records: 3
+Errors: 0
+Services: API INVENTORY
+
+Request 1007 : FAILED
+Records: 8
+Errors: 2
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1008 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1009 : SUCCESS
+Records: 3
+Errors: 0
+Services: API CART
+
+Request 1010 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1011 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1012 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1013 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1014 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1015 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1016 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1017 : FAILED
+Records: 8
+Errors: 3
+Services: AUTH API CART INVENTORY ORDER
+
+Request 1018 : SUCCESS
+Records: 9
+Errors: 0
+Services: INVENTORY API ORDER PAYMENT NOTIFY
+
+Request 1019 : FAILED
+Records: 2
+Errors: 1
+Services: SEARCH
+
+Request 1020 : FAILED
+Records: 1
+Errors: 1
+Services: SEARCH
+
+Request 1021 : FAILED
+Records: 1
+Errors: 1
+Services: SEARCH
+
+Request 1022 : SUCCESS
+Records: 1
+Errors: 0
+Services: SEARCH
+
+Request 1023 : SUCCESS
+Records: 1
+Errors: 0
+Services: SEARCH
+
+Request 1024 : SUCCESS
+Records: 3
+Errors: 0
+Services: API SEARCH
+
+Request 1025 : SUCCESS
+Records: 6
+Errors: 0
+Services: AUTH API CART INVENTORY
+
+Request 1026 : FAILED
+Records: 2
+Errors: 1
+Services: PAYMENT
+
+Request 1027 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1028 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1029 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1030 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1031 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1032 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1033 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1034 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1035 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1036 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1037 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1038 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1039 : SUCCESS
+Records: 10
+Errors: 0
+Services: API AUTH CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1040 : SUCCESS
+Records: 5
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1041 : SUCCESS
+Records: 3
+Errors: 0
+Services: CART INVENTORY
+
+Request 1042 : FAILED
+Records: 3
+Errors: 2
+Services: ORDER INVENTORY
+
+Request 1043 : SUCCESS
+Records: 8
+Errors: 0
+Services: INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1044 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH
+
+Request 1045 : FAILED
+Records: 2
+Errors: 1
+Services: PAYMENT
+
+Request 1046 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1047 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1048 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1049 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1050 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1051 : SUCCESS
+Records: 7
+Errors: 0
+Services: API ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1052 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1053 : SUCCESS
+Records: 4
+Errors: 0
+Services: API CART
+
+Request 1054 : FAILED
+Records: 2
+Errors: 1
+Services: SEARCH
+
+Request 1055 : FAILED
+Records: 1
+Errors: 1
+Services: SEARCH
+
+Request 1056 : FAILED
+Records: 1
+Errors: 1
+Services: SEARCH
+
+Request 1057 : FAILED
+Records: 1
+Errors: 1
+Services: SEARCH
+
+Request 1058 : SUCCESS
+Records: 1
+Errors: 0
+Services: SEARCH
+
+Request 1059 : SUCCESS
+Records: 1
+Errors: 0
+Services: SEARCH
+
+Request 1060 : SUCCESS
+Records: 3
+Errors: 0
+Services: API SEARCH
+
+Request 1061 : FAILED
+Records: 9
+Errors: 2
+Services: AUTH API CART INVENTORY PAYMENT ORDER NOTIFY
+
+Request 1062 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1063 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1064 : FAILED
+Records: 1
+Errors: 1
+Services: AUTH
+
+Request 1065 : FAILED
+Records: 1
+Errors: 1
+Services: AUTH
+
+Request 1066 : FAILED
+Records: 1
+Errors: 1
+Services: AUTH
+
+Request 1067 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1068 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1069 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1070 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1071 : SUCCESS
+Records: 2
+Errors: 0
+Services: INVENTORY
+
+Request 1072 : SUCCESS
+Records: 3
+Errors: 0
+Services: API SEARCH
+
+Request 1073 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1074 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1075 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1076 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1077 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1078 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1079 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1080 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1081 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1082 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1083 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1084 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1085 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1086 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1087 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1088 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1089 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1090 : SUCCESS
+Records: 5
+Errors: 0
+Services: API AUTH PAYMENT ORDER
+
+Request 1091 : SUCCESS
+Records: 3
+Errors: 0
+Services: CART INVENTORY
+
+Request 1092 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1093 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1094 : FAILED
+Records: 7
+Errors: 2
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1095 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1096 : SUCCESS
+Records: 3
+Errors: 0
+Services: API CART
+
+Request 1097 : FAILED
+Records: 2
+Errors: 1
+Services: INVENTORY
+
+Request 1098 : FAILED
+Records: 1
+Errors: 1
+Services: INVENTORY
+
+Request 1099 : FAILED
+Records: 1
+Errors: 1
+Services: INVENTORY
+
+Request 1100 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1101 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1102 : SUCCESS
+Records: 4
+Errors: 0
+Services: API INVENTORY ORDER
+
+Request 1103 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1104 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1105 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1106 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1107 : FAILED
+Records: 2
+Errors: 1
+Services: API
+
+Request 1108 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1109 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1110 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1111 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1112 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1113 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1114 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1115 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1116 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1117 : FAILED
+Records: 2
+Errors: 1
+Services: PAYMENT
+
+Request 1118 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1119 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1120 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1121 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1122 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1123 : SUCCESS
+Records: 10
+Errors: 0
+Services: API AUTH CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1124 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1125 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1126 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1127 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1128 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1129 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1130 : SUCCESS
+Records: 2
+Errors: 0
+Services: INVENTORY
+
+Request 1131 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1132 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1133 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1134 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1135 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1136 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1137 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1138 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1139 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1140 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1141 : SUCCESS
+Records: 7
+Errors: 0
+Services: INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1142 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1143 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1144 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1145 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1146 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1147 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1148 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1149 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1150 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1151 : SUCCESS
+Records: 3
+Errors: 0
+Services: AUTH API
+
+Request 1152 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1153 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1154 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1155 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1156 : FAILED
+Records: 1
+Errors: 1
+Services: NOTIFY
+
+Request 1157 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1158 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1159 : SUCCESS
+Records: 3
+Errors: 0
+Services: API CART
+
+Request 1160 : SUCCESS
+Records: 7
+Errors: 0
+Services: INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1161 : SUCCESS
+Records: 3
+Errors: 0
+Services: API
+
+Request 1162 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1163 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1164 : FAILED
+Records: 4
+Errors: 2
+Services: PAYMENT ORDER NOTIFY
+
+Request 1165 : SUCCESS
+Records: 10
+Errors: 0
+Services: API AUTH CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1166 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1167 : SUCCESS
+Records: 2
+Errors: 0
+Services: INVENTORY
+
+Request 1168 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1169 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1170 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1171 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1172 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1173 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1174 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1175 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1176 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1177 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1178 : SUCCESS
+Records: 7
+Errors: 0
+Services: INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1179 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1180 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1181 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1182 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1183 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1184 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1185 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1186 : SUCCESS
+Records: 10
+Errors: 0
+Services: API CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1187 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1188 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1189 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1190 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1191 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1192 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1193 : FAILED
+Records: 2
+Errors: 1
+Services: PAYMENT
+
+Request 1194 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1195 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1196 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1197 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1198 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1199 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1200 : SUCCESS
+Records: 3
+Errors: 0
+Services: API
+
+Request 1201 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1202 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1203 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1204 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1205 : FAILED
+Records: 4
+Errors: 2
+Services: AUTH API
+
+Request 1206 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1207 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1208 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1209 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1210 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1211 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1212 : SUCCESS
+Records: 2
+Errors: 0
+Services: INVENTORY
+
+Request 1213 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1214 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1215 : FAILED
+Records: 6
+Errors: 2
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1216 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1217 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1218 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1219 : SUCCESS
+Records: 10
+Errors: 0
+Services: AUTH API CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1220 : SUCCESS
+Records: 3
+Errors: 0
+Services: API
+
+Request 1221 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1222 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1223 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1224 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1225 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1226 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1227 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1228 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1229 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1230 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1231 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1232 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1233 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1234 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1235 : SUCCESS
+Records: 3
+Errors: 0
+Services: SEARCH
+
+Request 1236 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1237 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1238 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1239 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1240 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1241 : FAILED
+Records: 6
+Errors: 2
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1242 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1243 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1244 : SUCCESS
+Records: 10
+Errors: 0
+Services: AUTH API CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1245 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1246 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1247 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1248 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1249 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1250 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1251 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1252 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1253 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1254 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1255 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1256 : SUCCESS
+Records: 3
+Errors: 0
+Services: CART
+
+Request 1257 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1258 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1259 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1260 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1261 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1262 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1263 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1264 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1265 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1266 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1267 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1268 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1269 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1270 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1271 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1272 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1273 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1274 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1275 : SUCCESS
+Records: 3
+Errors: 0
+Services: AUTH API
+
+Request 1276 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1277 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1278 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1279 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1280 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1281 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1282 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1283 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1284 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1285 : FAILED
+Records: 4
+Errors: 2
+Services: PAYMENT ORDER NOTIFY
+
+Request 1286 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1287 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1288 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1289 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1290 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1291 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1292 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1293 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1294 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1295 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1296 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1297 : SUCCESS
+Records: 10
+Errors: 0
+Services: AUTH API CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1298 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1299 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1300 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1301 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1302 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1303 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1304 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1305 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1306 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1307 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1308 : FAILED
+Records: 1
+Errors: 1
+Services: API
+
+Request 1309 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1310 : SUCCESS
+Records: 1
+Errors: 0
+Services: API
+
+Request 1311 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1312 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1313 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1314 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1315 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1316 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1317 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1318 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1319 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1320 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1321 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1322 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1323 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1324 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1325 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1326 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1327 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1328 : FAILED
+Records: 4
+Errors: 2
+Services: PAYMENT ORDER NOTIFY
+
+Request 1329 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1330 : SUCCESS
+Records: 4
+Errors: 0
+Services: API AUTH SEARCH
+
+Request 1331 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1332 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1333 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1334 : SUCCESS
+Records: 10
+Errors: 0
+Services: AUTH API CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1335 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1336 : SUCCESS
+Records: 3
+Errors: 0
+Services: API
+
+Request 1337 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1338 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1339 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1340 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1341 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1342 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1343 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1344 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1345 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1346 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1347 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1348 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1349 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1350 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1351 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1352 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1353 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1354 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1355 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1356 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1357 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1358 : SUCCESS
+Records: 10
+Errors: 0
+Services: API AUTH CART INVENTORY ORDER PAYMENT NOTIFY
+
+Request 1359 : SUCCESS
+Records: 4
+Errors: 0
+Services: AUTH API SEARCH
+
+Request 1360 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1361 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1362 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1363 : SUCCESS
+Records: 1
+Errors: 0
+Services: CART
+
+Request 1364 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1365 : SUCCESS
+Records: 4
+Errors: 0
+Services: PAYMENT ORDER NOTIFY
+
+Request 1366 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1367 : SUCCESS
+Records: 3
+Errors: 0
+Services: API AUTH
+
+Request 1368 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1369 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1370 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1371 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1372 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1373 : FAILED
+Records: 1
+Errors: 1
+Services: PAYMENT
+
+Request 1374 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1375 : SUCCESS
+Records: 1
+Errors: 0
+Services: PAYMENT
+
+Request 1376 : SUCCESS
+Records: 8
+Errors: 0
+Services: API AUTH ORDER INVENTORY PAYMENT NOTIFY
+
+Request 1377 : SUCCESS
+Records: 2
+Errors: 0
+Services: CART
+
+Request 1378 : SUCCESS
+Records: 1
+Errors: 0
+Services: INVENTORY
+
+Request 1379 : SUCCESS
+Records: 2
+Errors: 0
+Services: SEARCH
+
+Request 1380 : SUCCESS
+Records: 2
+Errors: 0
+Services: API
+
+Request 1381 : SUCCESS
+Records: 1
+Errors: 0
+Services: AUTH
+
+Request 1382 : SUCCESS
+Records: 1
+Errors: 0
+Services: NOTIFY
+
+Request 1383 : SUCCESS
+Records: 6
+Errors: 0
+Services: ORDER INVENTORY PAYMENT NOTIFY
+
+EOD

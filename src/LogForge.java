@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LogForge {
 
@@ -36,8 +38,13 @@ public class LogForge {
             return ((double) errorCount / total) * 100.0;
         }
 
-        public void displayServiceStats() {
-            System.out.println(serviceName + " total=" + total + " info=" + infoCount + " warn=" + warnCount + " error=" + errorCount);
+        public void displayServiceStats(PrintWriter writer) {
+            writer.println(serviceName + " total=" + total + " info=" + infoCount + " warn=" + warnCount + " error=" + errorCount);
+        }
+
+        public void displayWorstServiceStats(PrintWriter writer) {
+            writer.printf("%s total=%d info=%d warn=%d error=%d errorRate=%.5f%%\n",
+                    serviceName, total, infoCount, warnCount, errorCount, getErrorRate());
         }
     }
 
@@ -57,6 +64,13 @@ public class LogForge {
         }
 
         public String getTimeStamp() {
+            return timeStamp;
+        }
+
+        public String getOnlyTime() {
+            if (timeStamp != null && timeStamp.length() >= 19) {
+                return timeStamp.substring(11, 19);
+            }
             return timeStamp;
         }
 
@@ -80,12 +94,12 @@ public class LogForge {
             return this.reqId == requestId;
         }
 
-        void display_log_entry() {
-            System.out.println("Time Stamp: " + timeStamp);
-            System.out.println("Service: " + service);
-            System.out.println("Level: " + level);
-            System.out.println("Request Id: " + reqId);
-            System.out.println("Message: " + message);
+        void display_log_entry(PrintWriter writer) {
+            writer.println("Time Stamp: " + getOnlyTime());
+            writer.println("Service: " + service);
+            writer.println("Level: " + level);
+            writer.println("Request Id: " + reqId);
+            writer.println("Message: " + message);
         }
     }
 
@@ -118,9 +132,16 @@ public class LogForge {
             return count;
         }
 
-        public void displayIncident(int index) {
-            System.out.println("Incident #" + index + ": " + service + " (" + count + " errors) from "
-                    + firstTimeStamp + " to " + lastTimeStamp);
+        public String getOnlyTime(String ts) {
+            if (ts != null && ts.length() >= 19) {
+                return ts.substring(11, 19);
+            }
+            return ts;
+        }
+
+        public void displayIncident(int index, PrintWriter writer) {
+            writer.println("Incident #" + index + ": " + service + " (" + count + " errors) from "
+                    + getOnlyTime(firstTimeStamp) + " to " + getOnlyTime(lastTimeStamp));
         }
     }
 
@@ -159,22 +180,40 @@ public class LogForge {
             return serviceCount;
         }
 
-        public void displayRequestStats() {
+        public void displayRequestStats(PrintWriter writer) {
             String status = (errorCount > 0) ? "FAILED" : "SUCCESS";
-            System.out.println("Request " + reqId + ": " + status);
-            System.out.println("Records: " + recordCount);
-            System.out.println("Errors: " + errorCount);
-            System.out.print("Services:");
+            writer.println("Request " + reqId + " : " + status);
+            writer.println("Records: " + recordCount);
+            writer.println("Errors: " + errorCount);
+            writer.print("Services:");
             for (int i = 0; i < serviceCount; i++) {
-                System.out.print(" " + services[i]);
+                writer.print(" " + services[i]);
             }
-            System.out.println("\n");
+            writer.println("\n");
         }
     }
 
     public static void main(String[] args) {
+
+        String inputFileName;
+        if (args.length >= 1) {
+            inputFileName = args[0];
+        } else {
+            inputFileName = "system.log";
+        }
+
+        String outputFileName;
+        if (args.length >= 2) {
+            outputFileName = args[1];
+        } else {
+            outputFileName = "logforge_report.txt";
+        }
+
+
         FileReader fr = null;
         BufferedReader br = null;
+        PrintWriter writer = null;
+
         int total = 0;
         int info = 0;
         int warn = 0;
@@ -191,7 +230,7 @@ public class LogForge {
         RequestStats[] requests = new RequestStats[5];
         int requestCount = 0;
 
-        File filePath = new File("system.log");
+        File filePath = new File(inputFileName);
         try {
             fr = new FileReader(filePath);
             br = new BufferedReader(fr);
@@ -227,44 +266,6 @@ public class LogForge {
                         warn++;
                     }
 
-                    // Process Service Stats
-                    ServiceStats servicecheck = null;
-                    for (int i = 0; i < serviceCount; i++) {
-                        if (services[i].serviceName.equals(service)) {
-                            servicecheck = services[i];
-                            break;
-                        }
-                    }
-                    if (servicecheck == null) {
-                        ServiceStats newStat = new ServiceStats(service);
-                        if (serviceCount == services.length) {
-                            services = resizeServices(services);
-                        }
-                        services[serviceCount] = newStat;
-                        servicecheck = newStat;
-                        serviceCount++;
-                    }
-                    servicecheck.recordLog(levell);
-
-                    // Process Request Stats
-                    RequestStats requestcheck = null;
-                    for (int i = 0; i < requestCount; i++) {
-                        if (requests[i].getReqId() == reqid) {
-                            requestcheck = requests[i];
-                            break;
-                        }
-                    }
-                    if (requestcheck == null) {
-                        RequestStats newReq = new RequestStats(reqid);
-                        if (requestCount == requests.length) {
-                            requests = resizeRequests(requests);
-                        }
-                        requests[requestCount] = newReq;
-                        requestcheck = newReq;
-                        requestCount++;
-                    }
-                    recordRequestLog(requestcheck, service, levell);
-
                 } else {
                     invalid++;
                 }
@@ -275,14 +276,17 @@ public class LogForge {
             return;
         }
 
+        // Q8: Sort Log Entries Chronologically
         sortLogEntries(log, logCount);
 
+        // Perform analysis on sorted entries
         for (int i = 0; i < logCount; i++) {
             LogEntry entry = log[i];
             String service = entry.getService();
             String levell = entry.getLevel();
             int reqid = entry.getReqId();
 
+            // Service Stats
             ServiceStats servicecheck = null;
             for (int k = 0; k < serviceCount; k++) {
                 if (services[k].serviceName.equals(service)) {
@@ -301,6 +305,7 @@ public class LogForge {
             }
             servicecheck.recordLog(levell);
 
+            // Request Stats
             RequestStats requestcheck = null;
             for (int k = 0; k < requestCount; k++) {
                 if (requests[k].getReqId() == reqid) {
@@ -320,41 +325,84 @@ public class LogForge {
             recordRequestLog(requestcheck, service, levell);
         }
 
-        System.out.println("Total records: " + total);
-        System.out.println("Valid Records: " + valid);
-        System.out.println("Invalid Records: " + invalid);
-        System.out.println("INFO: " + info);
-        System.out.println("WARN: " + warn);
-        System.out.println("ERROR: " + error);
+        // Open Report File Writer
+        try {
+            writer = new PrintWriter(new FileWriter(outputFileName));
 
-        sortServicesStats(services, serviceCount);
+            // Summary Section
+            writer.println("Total records: " + total);
+            writer.println("Valid Records: " + valid);
+            writer.println("Invalid Records: " + invalid);
+            writer.println("ERROR: " + error);
+            writer.println("INFO: " + info);
+            writer.println("WARN: " + warn);
 
-        System.out.println("\n--- VERIFYING LOG ENTRY OBJECTS ---");
-        int verifyLimit = logCount < 5 ? logCount : 5;
-        for (int i = 0; i < verifyLimit; i++) {
-            System.out.println("Entry #" + (i + 1) + ":");
-            log[i].display_log_entry();
-            System.out.println("---------------------------------");
+            sortServicesStats(services, serviceCount);
+
+            writer.println("\n--- VERIFYING LOG ENTRY OBJECTS ---");
+            int verifyLimit = logCount < 5 ? logCount : 5;
+            for (int i = 0; i < verifyLimit; i++) {
+                writer.println("Entry #" + (i + 1) + ":");
+                log[i].display_log_entry(writer);
+                writer.println("---------------------------------");
+            }
+
+            writer.println("\n--- VERIFYING Service Stats ENTRY OBJECTS ---");
+            for (int i = 0; i < serviceCount; i++) {
+                writer.println("Entry #" + (i + 1) + ":");
+                services[i].displayServiceStats(writer);
+                writer.println("---------------------------------");
+            }
+
+            writer.println("\n--- WORST SERVICES (SORTED BY ERROR RATE) ---");
+            for (int i = 0; i < serviceCount; i++) {
+                services[i].displayWorstServiceStats(writer);
+            }
+
+            writer.println("\n--- DETECTED INCIDENTS ---");
+            detectIncident(log, logCount, writer);
+
+            writer.println("\n--- REQUEST STATS ---");
+            for (int i = 0; i < requestCount; i++) {
+                requests[i].displayRequestStats(writer);
+            }
+
+            writer.println("EOD");
+
+            writer.close();
+        } catch (IOException ex) {
+            System.out.println("Error writing report file: " + ex.getMessage());
         }
+    }
 
-        System.out.println("\n--- VERIFYING Service Stats ENTRY OBJECTS ---");
-        for (int i = 0; i < serviceCount; i++) {
-            System.out.println("Entry #" + (i + 1) + ":");
-            services[i].displayServiceStats();
-            System.out.println("---------------------------------");
-        }
+    public static int compareTimestamps(String t1, String t2) {
+        long sec1 = timestampToSeconds(t1);
+        long sec2 = timestampToSeconds(t2);
+        if (sec1 < sec2) return -1;
+        if (sec1 > sec2) return 1;
+        return 0;
+    }
 
-        System.out.println("\n--- WORST SERVICES (SORTED BY ERROR RATE) ---");
-        for (int i = 0; i < serviceCount; i++) {
-            services[i].displayServiceStats();
-        }
+    public static void sortLogEntries(LogEntry[] entries, int count) {
+        if (count <= 1) return;
 
-        System.out.println("\n--- DETECTED INCIDENTS ---");
-        detectIncident(log, logCount);
+        for (int i = 0; i < count; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                int cmp = compareTimestamps(entries[j].getTimeStamp(), entries[j + 1].getTimeStamp());
 
-        System.out.println("\n--- REQUEST STATS ---");
-        for (int i = 0; i < requestCount; i++) {
-            requests[i].displayRequestStats();
+                boolean shouldSwap = false;
+                if (cmp > 0) {
+                    shouldSwap = true;
+                } else if (cmp == 0) {
+                    shouldSwap = true;
+                }
+
+                if (shouldSwap) {
+                    LogEntry temp = entries[j];
+                    entries[j] = entries[j + 1];
+                    entries[j + 1] = temp;
+                }
+            }
         }
     }
 
@@ -491,16 +539,6 @@ public class LogForge {
         return true;
     }
 
-
-    public static int compareTimestamps(String t1, String t2) {
-        long sec1 = timestampToSeconds(t1);
-        long sec2 = timestampToSeconds(t2);
-        if (sec1 < sec2) return -1;
-        if (sec1 > sec2) return 1;
-        return 0;
-    }
-
-
     public static long getTimeDifference(String t1, String t2) {
         long sec1 = timestampToSeconds(t1);
         long sec2 = timestampToSeconds(t2);
@@ -519,32 +557,6 @@ public class LogForge {
         return totalDays * 86400L + hour * 3600L + min * 60L + sec;
     }
 
-    public static void sortLogEntries(LogEntry[] entries, int count) {
-        if (count <= 1) return;
-
-        for (int i = 0; i < count; i++) {
-            for (int j = 0; j < count - i - 1; j++) {
-                int cmp = compareTimestamps(entries[j].getTimeStamp(), entries[j + 1].getTimeStamp());
-
-                boolean shouldSwap = false;
-                // Greater timestamp comes later
-                if (cmp > 0) {
-                    shouldSwap = true;
-                }
-                // Equal timestamps -> reverse original relative order
-                else if (cmp == 0) {
-                    shouldSwap = true;
-                }
-
-                if (shouldSwap) {
-                    LogEntry temp = entries[j];
-                    entries[j] = entries[j + 1];
-                    entries[j + 1] = temp;
-                }
-            }
-        }
-    }
-
     public static incident[] resizeIncident(incident[] old) {
         incident[] newIncident = new incident[old.length * 2];
         for (int i = 0; i < old.length; i++) {
@@ -553,7 +565,7 @@ public class LogForge {
         return newIncident;
     }
 
-    public static void detectIncident(LogEntry[] log, int logCount) {
+    public static void detectIncident(LogEntry[] log, int logCount, PrintWriter writer) {
         incident[] incidents = new incident[5];
         int incidentCount = 0;
 
@@ -618,10 +630,10 @@ public class LogForge {
         }
 
         if (incidentCount == 0) {
-            System.out.println("No incidents detected.");
+            writer.println("No incidents detected.");
         } else {
             for (int i = 0; i < incidentCount; i++) {
-                incidents[i].displayIncident(i + 1);
+                incidents[i].displayIncident(i + 1, writer);
             }
         }
     }

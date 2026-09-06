@@ -275,6 +275,51 @@ public class LogForge {
             return;
         }
 
+        sortLogEntries(log, logCount);
+
+        for (int i = 0; i < logCount; i++) {
+            LogEntry entry = log[i];
+            String service = entry.getService();
+            String levell = entry.getLevel();
+            int reqid = entry.getReqId();
+
+            ServiceStats servicecheck = null;
+            for (int k = 0; k < serviceCount; k++) {
+                if (services[k].serviceName.equals(service)) {
+                    servicecheck = services[k];
+                    break;
+                }
+            }
+            if (servicecheck == null) {
+                ServiceStats newStat = new ServiceStats(service);
+                if (serviceCount == services.length) {
+                    services = resizeServices(services);
+                }
+                services[serviceCount] = newStat;
+                servicecheck = newStat;
+                serviceCount++;
+            }
+            servicecheck.recordLog(levell);
+
+            RequestStats requestcheck = null;
+            for (int k = 0; k < requestCount; k++) {
+                if (requests[k].getReqId() == reqid) {
+                    requestcheck = requests[k];
+                    break;
+                }
+            }
+            if (requestcheck == null) {
+                RequestStats newReq = new RequestStats(reqid);
+                if (requestCount == requests.length) {
+                    requests = resizeRequests(requests);
+                }
+                requests[requestCount] = newReq;
+                requestcheck = newReq;
+                requestCount++;
+            }
+            recordRequestLog(requestcheck, service, levell);
+        }
+
         System.out.println("Total records: " + total);
         System.out.println("Valid Records: " + valid);
         System.out.println("Invalid Records: " + invalid);
@@ -446,6 +491,16 @@ public class LogForge {
         return true;
     }
 
+
+    public static int compareTimestamps(String t1, String t2) {
+        long sec1 = timestampToSeconds(t1);
+        long sec2 = timestampToSeconds(t2);
+        if (sec1 < sec2) return -1;
+        if (sec1 > sec2) return 1;
+        return 0;
+    }
+
+
     public static long getTimeDifference(String t1, String t2) {
         long sec1 = timestampToSeconds(t1);
         long sec2 = timestampToSeconds(t2);
@@ -462,6 +517,32 @@ public class LogForge {
 
         long totalDays = (year - 2000) * 365L + (month * 30L) + day;
         return totalDays * 86400L + hour * 3600L + min * 60L + sec;
+    }
+
+    public static void sortLogEntries(LogEntry[] entries, int count) {
+        if (count <= 1) return;
+
+        for (int i = 0; i < count; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                int cmp = compareTimestamps(entries[j].getTimeStamp(), entries[j + 1].getTimeStamp());
+
+                boolean shouldSwap = false;
+                // Greater timestamp comes later
+                if (cmp > 0) {
+                    shouldSwap = true;
+                }
+                // Equal timestamps -> reverse original relative order
+                else if (cmp == 0) {
+                    shouldSwap = true;
+                }
+
+                if (shouldSwap) {
+                    LogEntry temp = entries[j];
+                    entries[j] = entries[j + 1];
+                    entries[j + 1] = temp;
+                }
+            }
+        }
     }
 
     public static incident[] resizeIncident(incident[] old) {

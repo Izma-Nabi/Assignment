@@ -124,6 +124,53 @@ public class LogForge {
         }
     }
 
+    static class RequestStats {
+        private int reqId;
+        private int recordCount;
+        private int errorCount;
+        private String[] services;
+        private int serviceCount;
+
+        public RequestStats(int id) {
+            this.reqId = id;
+            this.recordCount = 0;
+            this.errorCount = 0;
+            this.services = new String[5];
+            this.serviceCount = 0;
+        }
+
+        public int getReqId() {
+            return reqId;
+        }
+
+        public int getRecordCount() {
+            return recordCount;
+        }
+
+        public int getErrorCount() {
+            return errorCount;
+        }
+
+        public String[] getServices() {
+            return services;
+        }
+
+        public int getServiceCount() {
+            return serviceCount;
+        }
+
+        public void displayRequestStats() {
+            String status = (errorCount > 0) ? "FAILED" : "SUCCESS";
+            System.out.println("Request " + reqId + ": " + status);
+            System.out.println("Records: " + recordCount);
+            System.out.println("Errors: " + errorCount);
+            System.out.print("Services:");
+            for (int i = 0; i < serviceCount; i++) {
+                System.out.print(" " + services[i]);
+            }
+            System.out.println("\n");
+        }
+    }
 
     public static void main(String[] args) {
         FileReader fr = null;
@@ -140,6 +187,9 @@ public class LogForge {
 
         ServiceStats[] services = new ServiceStats[5];
         int serviceCount = 0;
+
+        RequestStats[] requests = new RequestStats[5];
+        int requestCount = 0;
 
         File filePath = new File("system.log");
         try {
@@ -177,6 +227,7 @@ public class LogForge {
                         warn++;
                     }
 
+                    // Process Service Stats
                     ServiceStats servicecheck = null;
                     for (int i = 0; i < serviceCount; i++) {
                         if (services[i].serviceName.equals(service)) {
@@ -194,6 +245,26 @@ public class LogForge {
                         serviceCount++;
                     }
                     servicecheck.recordLog(levell);
+
+                    // Process Request Stats
+                    RequestStats requestcheck = null;
+                    for (int i = 0; i < requestCount; i++) {
+                        if (requests[i].getReqId() == reqid) {
+                            requestcheck = requests[i];
+                            break;
+                        }
+                    }
+                    if (requestcheck == null) {
+                        RequestStats newReq = new RequestStats(reqid);
+                        if (requestCount == requests.length) {
+                            requests = resizeRequests(requests);
+                        }
+                        requests[requestCount] = newReq;
+                        requestcheck = newReq;
+                        requestCount++;
+                    }
+                    recordRequestLog(requestcheck, service, levell);
+
                 } else {
                     invalid++;
                 }
@@ -235,6 +306,11 @@ public class LogForge {
 
         System.out.println("\n--- DETECTED INCIDENTS ---");
         detectIncident(log, logCount);
+
+        System.out.println("\n--- REQUEST STATS ---");
+        for (int i = 0; i < requestCount; i++) {
+            requests[i].displayRequestStats();
+        }
     }
 
     public static LogEntry[] resizeLog(LogEntry[] old) {
@@ -251,6 +327,14 @@ public class LogForge {
             newStat[i] = old[i];
         }
         return newStat;
+    }
+
+    public static RequestStats[] resizeRequests(RequestStats[] old) {
+        RequestStats[] newReq = new RequestStats[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            newReq[i] = old[i];
+        }
+        return newReq;
     }
 
     public static Boolean checkServiceName(String a, String b) {
@@ -444,7 +528,6 @@ public class LogForge {
                 }
             }
 
-            // Flush the remaining active error window after checking all entries for this service
             if (firstGroupTime != null && groupCount >= 3) {
                 if (incidentCount == incidents.length) {
                     incidents = resizeIncident(incidents);
@@ -462,6 +545,26 @@ public class LogForge {
         }
     }
 
+    public static void recordRequestLog(RequestStats req, String service, String level) {
+        req.recordCount++;
+        if (level.equals("ERROR")) {
+            req.errorCount++;
+        }
+        boolean isoccur = false;
+        for (int i = 0; i < req.serviceCount; i++) {
+            if (req.services[i].equals(service)) {
+                isoccur = true;
+                break;
+            }
+        }
+        if (!isoccur) {
+            if (req.serviceCount == req.services.length) {
+                req.services = resizeString(req.services);
+            }
+            req.services[req.serviceCount] = service;
+            req.serviceCount++;
+        }
+    }
 
     public static String[] resizeString(String[] old) {
         String[] newString = new String[old.length * 2];

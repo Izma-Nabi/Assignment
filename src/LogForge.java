@@ -5,29 +5,28 @@ import java.io.IOException;
 
 public class LogForge {
 
-    static class ServiceStats{
+    static class ServiceStats {
         private String serviceName;
         private int infoCount;
         private int warnCount;
         private int errorCount;
-        private int total=0;
+        private int total;
 
-        public ServiceStats(String sname){
-            this.serviceName=sname;
-            this.total=0;
-            this.errorCount=0;
-            this.infoCount=0;
-            this.warnCount=0;
+        public ServiceStats(String sname) {
+            this.serviceName = sname;
+            this.total = 0;
+            this.errorCount = 0;
+            this.infoCount = 0;
+            this.warnCount = 0;
         }
-        public void recordLog(String level){
+
+        public void recordLog(String level) {
             total++;
-            if(level.equals("INFO")){
+            if (level.equals("INFO")) {
                 infoCount++;
-            }
-            else if(level.equals("ERROR")){
+            } else if (level.equals("ERROR")) {
                 errorCount++;
-            }
-            else if(level.equals("WARN")){
+            } else if (level.equals("WARN")) {
                 warnCount++;
             }
         }
@@ -36,24 +35,25 @@ public class LogForge {
             if (total == 0) return 0.0;
             return ((double) errorCount / total) * 100.0;
         }
-        public void displayServiceStats(){
+
+        public void displayServiceStats() {
             System.out.println(serviceName + " total=" + total + " info=" + infoCount + " warn=" + warnCount + " error=" + errorCount);
         }
     }
-    static class LogEntry{
+
+    static class LogEntry {
         private String timeStamp;
         private int reqId;
         private String service;
         private String level;
         private String message;
 
-
-        public LogEntry(String timeStamp,int reqId, String service, String level, String message){
-            this.timeStamp=timeStamp;
-            this.reqId=reqId;
-            this.service=service;
-            this.level=level;
-            this.message=message;
+        public LogEntry(String timeStamp, int reqId, String service, String level, String message) {
+            this.timeStamp = timeStamp;
+            this.reqId = reqId;
+            this.service = service;
+            this.level = level;
+            this.message = message;
         }
 
         public String getTimeStamp() {
@@ -80,36 +80,67 @@ public class LogForge {
             return this.reqId == requestId;
         }
 
-        void display_log_entry(){
-            System.out.println("Time Stamp: "+ timeStamp);
-            System.out.println("Service: "+ service);
-            System.out.println("Level: "+ level);
-            System.out.println("Request Id: "+ reqId);
-            System.out.println("Message: "+ message);
+        void display_log_entry() {
+            System.out.println("Time Stamp: " + timeStamp);
+            System.out.println("Service: " + service);
+            System.out.println("Level: " + level);
+            System.out.println("Request Id: " + reqId);
+            System.out.println("Message: " + message);
         }
     }
 
+    static class incident {
+        private String service;
+        private String firstTimeStamp;
+        private String lastTimeStamp;
+        private int count;
+
+        public incident(String s, String f, String l, int c) {
+            this.service = s;
+            this.firstTimeStamp = f;
+            this.lastTimeStamp = l;
+            this.count = c;
+        }
+
+        public String getService() {
+            return service;
+        }
+
+        public String getFirstTimeStamp() {
+            return firstTimeStamp;
+        }
+
+        public String getLastTimeStamp() {
+            return lastTimeStamp;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void displayIncident(int index) {
+            System.out.println("Incident #" + index + ": " + service + " (" + count + " errors) from "
+                    + firstTimeStamp + " to " + lastTimeStamp);
+        }
+    }
+
+
     public static void main(String[] args) {
-//        if (args.length < 1) {
-//            System.out.println("Usage: java LogForge system.log");
-//            return;
-//        }
         FileReader fr = null;
         BufferedReader br = null;
         int total = 0;
         int info = 0;
         int warn = 0;
         int error = 0;
-        int valid=0;
-        int invalid=0;
+        int valid = 0;
+        int invalid = 0;
 
-        LogEntry[] log=new LogEntry[5];
-        int logCount=0;
+        LogEntry[] log = new LogEntry[5];
+        int logCount = 0;
 
-        ServiceStats[] services=new ServiceStats[5];
-        int serviceCount=0;
+        ServiceStats[] services = new ServiceStats[5];
+        int serviceCount = 0;
 
-//        File filePath = new File(args[0]);
         File filePath = new File("system.log");
         try {
             fr = new FileReader(filePath);
@@ -119,22 +150,23 @@ public class LogForge {
             while ((line = br.readLine()) != null) {
                 total++;
                 String level = getLevel(line);
-                if(isValidRecord(line)) {
+                if (isValidRecord(line)) {
                     valid++;
 
-                    String timestamp=getField(line,0);
-                    String service=getField(line,1);
-                    String levell=getField(line,2);
+                    String timestamp = getField(line, 0);
+                    String service = getField(line, 1);
+                    String levell = getField(line, 2);
                     int reqid = parsePositiveInt(getField(line, 3));
-                    String msg=getField(line,4);
+                    String msg = getField(line, 4);
 
-                    LogEntry entry=new LogEntry(timestamp,reqid,service,levell,msg);
+                    LogEntry entry = new LogEntry(timestamp, reqid, service, levell, msg);
 
-                    if(logCount==log.length){
-                        log=resizeLog(log);
+                    if (logCount == log.length) {
+                        log = resizeLog(log);
                     }
-                    log[logCount]=entry;
+                    log[logCount] = entry;
                     logCount++;
+
                     if (level.equals("INFO")) {
                         info++;
                     }
@@ -145,34 +177,33 @@ public class LogForge {
                         warn++;
                     }
 
-                    ServiceStats servicecheck=null;
-                    for(int i=0;i<serviceCount;i++){
-                        if(services[i].serviceName.equals(service)){
-                            servicecheck=services[i];
+                    ServiceStats servicecheck = null;
+                    for (int i = 0; i < serviceCount; i++) {
+                        if (services[i].serviceName.equals(service)) {
+                            servicecheck = services[i];
                             break;
                         }
                     }
-                    if(servicecheck == null){
-                        ServiceStats newStat =new ServiceStats(service);
-                        if(serviceCount==services.length){
-                            services=resizeServices(services);
+                    if (servicecheck == null) {
+                        ServiceStats newStat = new ServiceStats(service);
+                        if (serviceCount == services.length) {
+                            services = resizeServices(services);
                         }
-                        services[serviceCount]=newStat;
-                        servicecheck=newStat;
+                        services[serviceCount] = newStat;
+                        servicecheck = newStat;
                         serviceCount++;
                     }
                     servicecheck.recordLog(levell);
-                }
-                else{
+                } else {
                     invalid++;
                 }
             }
             br.close();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
             return;
         }
+
         System.out.println("Total records: " + total);
         System.out.println("Valid Records: " + valid);
         System.out.println("Invalid Records: " + invalid);
@@ -180,16 +211,17 @@ public class LogForge {
         System.out.println("WARN: " + warn);
         System.out.println("ERROR: " + error);
 
-        sortServicesStats(services,serviceCount);
+        sortServicesStats(services, serviceCount);
 
         System.out.println("\n--- VERIFYING LOG ENTRY OBJECTS ---");
-        for (int i = 0; i < 5; i++) {
+        int verifyLimit = logCount < 5 ? logCount : 5;
+        for (int i = 0; i < verifyLimit; i++) {
             System.out.println("Entry #" + (i + 1) + ":");
             log[i].display_log_entry();
             System.out.println("---------------------------------");
         }
 
-        System.out.println("\n--- VERIFYING Servise Stats ENTRY OBJECTS ---");
+        System.out.println("\n--- VERIFYING Service Stats ENTRY OBJECTS ---");
         for (int i = 0; i < serviceCount; i++) {
             System.out.println("Entry #" + (i + 1) + ":");
             services[i].displayServiceStats();
@@ -200,53 +232,63 @@ public class LogForge {
         for (int i = 0; i < serviceCount; i++) {
             services[i].displayServiceStats();
         }
+
+        System.out.println("\n--- DETECTED INCIDENTS ---");
+        detectIncident(log, logCount);
     }
 
-    public static LogEntry[] resizeLog(LogEntry[] old){
-        LogEntry[] newLog=new LogEntry[old.length*2];
-        for(int i=0;i< old.length;i++){
-            newLog[i]=old[i];
+    public static LogEntry[] resizeLog(LogEntry[] old) {
+        LogEntry[] newLog = new LogEntry[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            newLog[i] = old[i];
         }
         return newLog;
     }
 
-    public static ServiceStats[] resizeServices(ServiceStats[] old){
-        ServiceStats[] newStat=new ServiceStats[old.length*2];
-        for(int i=0;i<old.length;i++){
-            newStat[i]=old[i];
+    public static ServiceStats[] resizeServices(ServiceStats[] old) {
+        ServiceStats[] newStat = new ServiceStats[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            newStat[i] = old[i];
         }
         return newStat;
     }
 
-    public static Boolean checkServiceName(String name1, String name2){
-        return name1.compareTo(name2)>0;
+    public static Boolean checkServiceName(String a, String b) {
+        int min = a.length() < b.length() ? a.length() : b.length();
+
+        for (int i = 0; i < min; i++) {
+            if (a.charAt(i) < b.charAt(i)) return false;
+            if (a.charAt(i) > b.charAt(i)) return true;
+        }
+
+        return a.length() > b.length();
     }
-    public static void sortServicesStats(ServiceStats[] stats, int count){
-        if(count<1) return;
 
-        for(int i=0;i<count;i++){
-            for(int j=0;j<count-i-1;j++){
-                double error1=stats[j].getErrorRate();
-                double error2=stats[j+1].getErrorRate();
+    public static void sortServicesStats(ServiceStats[] stats, int count) {
+        if (count < 1) return;
 
-                boolean shouldSwap=false;
-                if(error1>error2){
-                    shouldSwap=true;
+        for (int i = 0; i < count; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                double error1 = stats[j].getErrorRate();
+                double error2 = stats[j + 1].getErrorRate();
+
+                boolean shouldSwap = false;
+                if (error1 < error2) {
+                    shouldSwap = true;
                 }
 
-                if(error1==error2){
-                    if(checkServiceName(stats[j].serviceName,stats[j+1].serviceName)){
-                        shouldSwap=true;
+                if (error1 == error2) {
+                    if (checkServiceName(stats[j].serviceName, stats[j + 1].serviceName)) {
+                        shouldSwap = true;
                     }
                 }
-                if(shouldSwap){
-                    ServiceStats temp=stats[j];
-                    stats[j]=stats[j+1];
-                    stats[j+1]=temp;
+                if (shouldSwap) {
+                    ServiceStats temp = stats[j];
+                    stats[j] = stats[j + 1];
+                    stats[j + 1] = temp;
                 }
             }
         }
-
     }
 
     public static String getLevel(String line) {
@@ -272,36 +314,37 @@ public class LogForge {
         }
         return result;
     }
-    public static Boolean isValidRecord(String Line){
-        int pipeCount=0;
-        for (int i=0;i<Line.length();i++){
-            if(Line.charAt(i)=='|'){
+
+    public static Boolean isValidRecord(String Line) {
+        int pipeCount = 0;
+        for (int i = 0; i < Line.length(); i++) {
+            if (Line.charAt(i) == '|') {
                 pipeCount++;
             }
         }
-        if(pipeCount!=4){
+        if (pipeCount != 4) {
             return false;
         }
         String Level = getLevel(Line);
-        if(!Level.equals("INFO")&& !Level.equals("ERROR") && !Level.equals("WARN")){
+        if (!Level.equals("INFO") && !Level.equals("ERROR") && !Level.equals("WARN")) {
             return false;
         }
 
-        String requestId= getRequestId(Line);
-        if(requestId.length()==0){
+        String requestId = getRequestId(Line);
+        if (requestId.length() == 0) {
             return false;
         }
         boolean hasNonZero = false;
-        for(int i=0;i<requestId.length();i++){
-            char num=requestId.charAt(i);
-            if(num<'0' || num>'9'){
+        for (int i = 0; i < requestId.length(); i++) {
+            char num = requestId.charAt(i);
+            if (num < '0' || num > '9') {
                 return false;
             }
-            if (num != '0'){
+            if (num != '0') {
                 hasNonZero = true;
             }
         }
-        if (!hasNonZero){
+        if (!hasNonZero) {
             return false;
         }
         String timestamp = getTimestamp(Line);
@@ -319,6 +362,115 @@ public class LogForge {
         return true;
     }
 
+    public static long getTimeDifference(String t1, String t2) {
+        long sec1 = timestampToSeconds(t1);
+        long sec2 = timestampToSeconds(t2);
+        return sec2 - sec1;
+    }
+
+    public static long timestampToSeconds(String timestamp) {
+        int year = parsePositiveInt(timestamp.substring(0, 4));
+        int month = parsePositiveInt(timestamp.substring(5, 7));
+        int day = parsePositiveInt(timestamp.substring(8, 10));
+        int hour = parsePositiveInt(timestamp.substring(11, 13));
+        int min = parsePositiveInt(timestamp.substring(14, 16));
+        int sec = parsePositiveInt(timestamp.substring(17, 19));
+
+        long totalDays = (year - 2000) * 365L + (month * 30L) + day;
+        return totalDays * 86400L + hour * 3600L + min * 60L + sec;
+    }
+
+    public static incident[] resizeIncident(incident[] old) {
+        incident[] newIncident = new incident[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            newIncident[i] = old[i];
+        }
+        return newIncident;
+    }
+
+    public static void detectIncident(LogEntry[] log, int logCount) {
+        incident[] incidents = new incident[5];
+        int incidentCount = 0;
+
+        String[] processedString = new String[5];
+        int processedCount = 0;
+
+        for (int i = 0; i < logCount; i++) {
+            String service = log[i].getService();
+
+            boolean alreadyProcessed = false;
+            for (int p = 0; p < processedCount; p++) {
+                if (processedString[p].equals(service)) {
+                    alreadyProcessed = true;
+                    break;
+                }
+            }
+            if (alreadyProcessed) continue;
+
+            if (processedCount == processedString.length) {
+                processedString = resizeString(processedString);
+            }
+            processedString[processedCount++] = service;
+
+            String firstGroupTime = null;
+            String lastGroupTime = null;
+            int groupCount = 0;
+
+            for (int j = 0; j < logCount; j++) {
+                LogEntry entry = log[j];
+                if (entry.getService().equals(service) && entry.getLevel().equals("ERROR")) {
+                    String currentTime = entry.getTimeStamp();
+                    if (firstGroupTime == null) {
+                        firstGroupTime = currentTime;
+                        lastGroupTime = currentTime;
+                        groupCount = 1;
+                    } else {
+                        long diff = getTimeDifference(lastGroupTime, currentTime);
+                        if (diff <= 60) {
+                            lastGroupTime = currentTime;
+                            groupCount++;
+                        } else {
+                            if (groupCount >= 3) {
+                                if (incidentCount == incidents.length) {
+                                    incidents = resizeIncident(incidents);
+                                }
+                                incidents[incidentCount++] = new incident(service, firstGroupTime, lastGroupTime, groupCount);
+                            }
+                            firstGroupTime = currentTime;
+                            lastGroupTime = currentTime;
+                            groupCount = 1;
+                        }
+                    }
+                }
+            }
+
+            // Flush the remaining active error window after checking all entries for this service
+            if (firstGroupTime != null && groupCount >= 3) {
+                if (incidentCount == incidents.length) {
+                    incidents = resizeIncident(incidents);
+                }
+                incidents[incidentCount++] = new incident(service, firstGroupTime, lastGroupTime, groupCount);
+            }
+        }
+
+        if (incidentCount == 0) {
+            System.out.println("No incidents detected.");
+        } else {
+            for (int i = 0; i < incidentCount; i++) {
+                incidents[i].displayIncident(i + 1);
+            }
+        }
+    }
+
+
+    public static String[] resizeString(String[] old) {
+        String[] newString = new String[old.length * 2];
+        for (int i = 0; i < old.length; i++) {
+            newString[i] = old[i];
+        }
+        return newString;
+    }
+
     public static int parsePositiveInt(String str) {
         int num = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -327,29 +479,28 @@ public class LogForge {
         return num;
     }
 
-    public static String getTimestamp(String Line){
-        String time="";
-        for(int i=0;i<Line.length();i++){
-            if(Line.charAt(i) == '|'){
+    public static String getTimestamp(String Line) {
+        String time = "";
+        for (int i = 0; i < Line.length(); i++) {
+            if (Line.charAt(i) == '|') {
                 break;
             }
-            time+=Line.charAt(i);
+            time += Line.charAt(i);
         }
         return time;
     }
 
-    public static String getRequestId(String Line){
-        String req="";
-        int pipeCount=0;
-        for(int i=0;i<Line.length();i++){
-            if(Line.charAt(i)=='|'){
+    public static String getRequestId(String Line) {
+        String req = "";
+        int pipeCount = 0;
+        for (int i = 0; i < Line.length(); i++) {
+            if (Line.charAt(i) == '|') {
                 pipeCount++;
                 continue;
             }
-            if(pipeCount==3){
-                req+=Line.charAt(i);
-            }
-            else if(pipeCount==4){
+            if (pipeCount == 3) {
+                req += Line.charAt(i);
+            } else if (pipeCount == 4) {
                 break;
             }
         }
@@ -357,25 +508,23 @@ public class LogForge {
     }
 
     public static String getField(String Line, int target) {
-        int pipeCount=0;
-        String result= "";
-        for(int i=0;i<Line.length();i++){
-            char c=Line.charAt(i);
-            if(c=='|'){
-                if(pipeCount==target){
+        int pipeCount = 0;
+        String result = "";
+        for (int i = 0; i < Line.length(); i++) {
+            char c = Line.charAt(i);
+            if (c == '|') {
+                if (pipeCount == target) {
                     return result;
                 }
                 pipeCount++;
-                result="";
-            }
-            else{
-                result+=c;
+                result = "";
+            } else {
+                result += c;
             }
         }
-        if(pipeCount==target){
+        if (pipeCount == target) {
             return result;
         }
         return "";
     }
 }
-
